@@ -10,5 +10,5 @@ const app = express();
 app.use(router);
 
 app.listen(port, () => {
-  console.log(`Api runnin on port ${port}`);
+  console.log(`Api running on port ${port}`);
 });
