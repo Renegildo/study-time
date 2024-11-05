@@ -1,0 +1,22 @@
+services:
+  nginx:
+    image: nginx
+    container_name: study-time-nginx
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - 80:80
+
+  api:
+    build:
+      context: ./api
+    container_name: study-time-api
+    expose:
+      - "8080"
+
+  client:
+    build:
+      context: ./client
+    container_name: study-time-client
+    expose:
+      - "80"
