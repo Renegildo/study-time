@@ -7,7 +7,7 @@ const port = process.env.PORT || 8080;
 
 const app = express();
 
-app.use(router);
+app.use(router());
 
 app.listen(port, () => {
   console.log(`Api running on port ${port}`);
