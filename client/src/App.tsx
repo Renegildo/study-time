@@ -86,7 +86,7 @@ const App = () => {
           )}
         </h1>
 
-        <div className="h-72 w-72 bg-purple rounded-full flex items-center justify-center">
+        <div className="h-72 w-72 bg-purple rounded-full shadow-2xl flex items-center justify-center">
           <svg className="h-64 w-64" viewBox="0 0 100 100">
             <circle
               cx="50"
