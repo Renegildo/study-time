@@ -8,7 +8,7 @@ const port = process.env.PORT || 8080;
 const app = express();
 
 const timer = new Timer();
-app.use(router(timer));
+app.use("/api", router(timer));
 
 setInterval(() => {
   timer.update();
