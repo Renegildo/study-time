@@ -1,5 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import useWebSocket from 'react-use-websocket';
+import { socketUrl } from './utils';
 
 type Stage = "focus" | "break" | "none";
 
@@ -7,6 +9,7 @@ const App = () => {
   const [progress, setProgress] = useState(0);
   const [status, setStatus] = useState<{ timeElapsed: number; currentStage: Stage } | null>(null);
   const [timeLabel, setTimeLabel] = useState<string>("00:00");
+  const [isPaused, setIsPaused] = useState<boolean>(false);
 
   const stageLabel: Record<Stage, string> = {
     "focus": "Focando",
@@ -23,7 +26,8 @@ const App = () => {
   useEffect(() => {
     const fetchData = async () => {
       const response = await axios.get("http://localhost:8080/api/status");
-      setStatus(response.data);
+      setStatus({ ...response.data });
+      setIsPaused(response.data.isPaused);
     };
 
     fetchData();
@@ -31,13 +35,15 @@ const App = () => {
 
   useEffect(() => {
     const interval = setInterval(() => {
+      if (isPaused) return;
+
       setStatus(prev => (prev ?
         { ...prev, timeElapsed: prev.timeElapsed + 1 } :
         { timeElapsed: 0, currentStage: "none" }));
     }, 1000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [isPaused]);
 
   useEffect(() => {
     setProgress(getProgress());
@@ -74,6 +80,30 @@ const App = () => {
 
     return `${formattedMinutes}:${formattedSeconds}`;
   };
+
+  const { lastMessage } = useWebSocket(socketUrl)
+
+  useEffect(() => {
+    if (!lastMessage?.data) return;
+
+    switch (lastMessage.data) {
+      case "focus":
+        setStatus({ timeElapsed: 0, currentStage: "focus" });
+        break;
+      case "reset":
+        setStatus({ timeElapsed: 0, currentStage: "none" });
+        break;
+      case "break":
+        setStatus({ timeElapsed: 0, currentStage: "break" });
+        break;
+      case "pause":
+        setIsPaused(true);
+        break;
+      case "resume":
+        setIsPaused(false);
+        break;
+    }
+  }, [lastMessage]);
 
   return (
     <div className="w-screen h-screen bg-dark-purple flex items-center justify-center overflow-hidden relative">
