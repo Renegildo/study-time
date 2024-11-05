@@ -2,7 +2,7 @@ export enum PomodoroStage {
   Focus = "focus",
   Break = "break",
   None = "none"
-}
+};
 
 export class Timer {
   private timeElapsed = 0;
@@ -14,42 +14,42 @@ export class Timer {
     this.intervalId = setInterval(() => {
       this.timeElapsed += 1;
     }, 1000);
-  }
+  };
 
   pause() {
     if (this.intervalId) {
       clearInterval(this.intervalId);
       this.intervalId = null;
     }
-  }
+  };
 
   status() {
     return {
       timeElapsed: this.timeElapsed,
       currentStage: this.currentStage
     };
-  }
+  };
 
   private reset() {
     this.pause();
     this.timeElapsed = 0;
     this.currentStage = PomodoroStage.None;
-  }
+  };
 
   private restart() {
     this.reset();
     this.start();
-  }
+  };
 
   focus() {
     this.currentStage = PomodoroStage.Focus;
     this.restart();
-  }
+  };
 
   break() {
     this.currentStage = PomodoroStage.Break;
     this.restart();
-  }
+  };
 
   private checkForReset() {
     const timeElapsedInMinutes = this.timeElapsed / 60;
@@ -67,9 +67,9 @@ export class Timer {
     ) {
       this.reset();
     }
-  }
+  };
 
   update() {
     this.checkForReset();
-  }
-}
+  };
+};
