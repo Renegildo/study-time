@@ -10,6 +10,10 @@ const app = express();
 const timer = new Timer();
 app.use(router(timer));
 
+setInterval(() => {
+  timer.update();
+}, 1000);
+
 app.listen(port, () => {
   console.log(`Api running on port ${port}`);
 });
