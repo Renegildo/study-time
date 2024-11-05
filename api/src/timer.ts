@@ -8,6 +8,11 @@ export class Timer {
   private timeElapsed = 0;
   private intervalId: NodeJS.Timeout | null = null;
   private currentStage = PomodoroStage.None;
+  private onResetCallback: () => void;
+
+  constructor(onResetCallback: () => void) {
+    this.onResetCallback = onResetCallback;
+  }
 
   private start() {
     if (this.intervalId) return;
@@ -40,6 +45,7 @@ export class Timer {
     this.pause();
     this.timeElapsed = 0;
     this.currentStage = PomodoroStage.None;
+    this.onResetCallback();
   };
 
   private restart() {
