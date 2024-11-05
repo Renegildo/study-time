@@ -23,6 +23,12 @@ export class Timer {
     }
   };
 
+  resume() {
+    if (!this.intervalId) {
+      this.start();
+    }
+  };
+
   status() {
     return {
       timeElapsed: this.timeElapsed,

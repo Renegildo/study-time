@@ -14,6 +14,16 @@ export default (timer: Timer) => {
     res.sendStatus(200);
   });
 
+  router.post("/pause", (_req, res) => {
+    timer.pause();
+    res.sendStatus(200);
+  });
+
+  router.post("/resume", (_req, res) => {
+    timer.resume();
+    res.sendStatus(200);
+  });
+
   router.get("/status", (_req, res) => {
     const status = timer.status();
 
