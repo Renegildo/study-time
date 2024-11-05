@@ -37,7 +37,8 @@ export class Timer {
   status() {
     return {
       timeElapsed: this.timeElapsed,
-      currentStage: this.currentStage
+      currentStage: this.currentStage,
+      isPaused: !!!this.intervalId,
     };
   };
 
