@@ -48,13 +48,13 @@ export class Timer {
   };
 
   focus() {
-    this.currentStage = PomodoroStage.Focus;
     this.restart();
+    this.currentStage = PomodoroStage.Focus;
   };
 
   break() {
-    this.currentStage = PomodoroStage.Break;
     this.restart();
+    this.currentStage = PomodoroStage.Break;
   };
 
   private checkForReset() {
