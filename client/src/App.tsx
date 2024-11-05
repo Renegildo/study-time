@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import useWebSocket from 'react-use-websocket';
-import { socketUrl } from './utils';
+import { apiUrl, socketUrl } from './utils';
 
 type Stage = "focus" | "break" | "none";
 
@@ -25,7 +25,7 @@ const App = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await axios.get("http://localhost:8080/api/status");
+      const response = await axios.get(apiUrl + "/status");
       setStatus({ ...response.data });
       setIsPaused(response.data.isPaused);
     };
