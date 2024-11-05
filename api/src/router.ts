@@ -14,6 +14,11 @@ export default (timer: Timer) => {
     res.sendStatus(200);
   });
 
+  router.post("/reset", (_req, res) => {
+    timer.reset();
+    res.sendStatus(200);
+  })
+
   router.post("/pause", (_req, res) => {
     timer.pause();
     res.sendStatus(200);

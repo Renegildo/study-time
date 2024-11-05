@@ -36,7 +36,7 @@ export class Timer {
     };
   };
 
-  private reset() {
+  reset() {
     this.pause();
     this.timeElapsed = 0;
     this.currentStage = PomodoroStage.None;
